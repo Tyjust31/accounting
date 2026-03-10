@@ -1,38 +1,62 @@
-# sv
+Here is the professional, clean, and comprehensive README.md in English, optimized for Svelte 5 and Bun.
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+🚀 Lalye | Financial Control Station
+Lalye is a high-performance financial dashboard designed for entrepreneurs and freelancers. Built with Svelte 5, it leverages the power of Runes to provide granular reactivity and real-time cash flow management.
 
-## Creating a project
+✨ Key Features
+Runes Reactivity: Powered by $state and $derived for instant calculation of profit margins and health scores.
 
-If you're seeing this, you've probably already done this step. Congrats!
+Deep Night Interface: A modern Glassmorphism design optimized for low-light environments and eye comfort.
 
-```bash
-# create a new project in the current directory
-npx sv create
+Invoice Tracking: Integrated upcoming bills tracker with quick-pay actions.
 
-# create a new project in my-app
-npx sv create my-app
-```
+Adaptive Layout: Intelligent sidebar that transitions seamlessly from mobile touch-points to 4K desktop views.
 
-## Developing
+Financial Health Score: Real-time dynamic visualization of your business's overall fiscal status.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+🛠 Installation with Bun
+This project is optimized for Bun, the fast all-in-one JavaScript runtime.
 
-```bash
-npm run dev
+Bash
+# 1. Install Bun (if not already installed)
+curl -fsSL https://bun.sh/install | bash
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+# 2. Clone the repository
+git clone https://github.com/Tyjust31/lalye-dashboard.git
+cd lalye-dashboard
 
-## Building
+# 3. Install dependencies (ultra-fast with Bun)
+bun install
 
-To create a production version of your app:
+# 4. Start the development server
+bun dev
+📂 Project Structure
+Plaintext
+src/
+├── lib/           # Reusable UI components (Cards, Modals)
+├── routes/        # SvelteKit routing and page logic
+├── app.css        # Global styles (Glassmorphism & CSS Variables)
+└── components/    # Dashboard-specific logic (Charts, Data Lists)
+🚀 Deployment
+To generate an optimized production build:
 
-```bash
-npm run build
-```
+Bash
+bun run build
+[!TIP]
+You can preview the final production build locally using bun run preview.
 
-You can preview the production build with `npm run preview`.
+🤝 Contributing
+Fork the Project.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Create your Feature Branch (git checkout -b feature/AmazingFeature).
+
+Commit your changes using your configured ID (Tyjust31).
+
+Push to the Branch (git push origin feature/AmazingFeature).
+
+Open a Pull Request.
+
+📄 License
+Distributed under the MIT License. See LICENSE for more information.
+
+Developed with ❤️ by Tyjust31

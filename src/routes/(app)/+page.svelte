@@ -1,583 +1,361 @@
 <script>
-    import { onMount } from 'svelte';
-  
-    let isSticky = false;
-  
-    onMount(() => {
-      const handleScroll = () => {
-        isSticky = window.scrollY > 50;
-      };
-  
-      window.addEventListener('scroll', handleScroll);
-  
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    });
-  </script>
-  
-  <svelte:head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </svelte:head>
-  
- 
+  import { onMount } from 'svelte';
 
-  <style>
-    :root {
-      --primary: #0066cc;
-      --primary-light: #3385ff;
-      --primary-dark: #004999;
-      --accent: #10b981;
-      --accent-hover: #059669;
-      --dark: #1f2937;
-      --gray-100: #f4f6f8;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-500: #6b7280;
-      --gray-700: #374151;
-      --white: #ffffff;
-      --max-width: 1200px;
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-      --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.03);
-      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.07), 0 15px 30px rgba(0, 0, 0, 0.04);
-      --radius: 10px;
+  let isSticky = false;
+
+  onMount(() => {
+    const handleScroll = () => {
+      isSticky = window.scrollY > 20;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  });
+</script>
+
+<svelte:head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</svelte:head>
+
+<style lang="scss">
+  // --- VARIABLES ---
+  $bg-base: #09090b;
+  $bg-card: #111113;
+  $primary: #3b82f6;
+  $primary-glow: rgba(59, 130, 246, 0.15);
+  $accent: #10b981;
+  $text-main: #fafafa;
+  $text-muted: #a1a1aa;
+  $border: rgba(255, 255, 255, 0.08);
+  $radius-lg: 16px;
+  $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  :global(body) {
+    background-color: $bg-base;
+    color: $text-main;
+    font-family: 'Geist', sans-serif;
+    margin: 0;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  // --- HEADER & NAV ---
+  .sticky-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: $transition;
+    padding: 24px 0;
+
+    &.isSticky {
+      padding: 12px 0;
+      backdrop-filter: blur(12px);
+      background: rgba($bg-base, 0.8);
+      border-bottom: 1px solid $border;
     }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: var(--gray-100);
-      color: var(--dark);
-      line-height: 1.6;
-    }
-    
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 40px 24px;
-    }
-    
-    .sticky-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(10px);
-      background-color: rgba(255, 255, 255, 0.9);
-      box-shadow: var(--shadow);
-    }
-    
-    .nav-container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    
+
     .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 0;
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        
+        &-icon {
+          width: 32px;
+          height: 32px;
+          background: linear-gradient(135deg, $primary, #60a5fa);
+          border-radius: 8px;
+          display: grid;
+          place-items: center;
+          color: white;
+          font-weight: 800;
+        }
+
+        &-text {
+          color: $text-main;
+          font-weight: 700;
+          font-size: 1.1rem;
+          letter-spacing: -0.02em;
+        }
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 8px;
+
+        a {
+          color: $text-muted;
+          text-decoration: none;
+          font-size: 0.9rem;
+          font-weight: 500;
+          padding: 8px 16px;
+          border-radius: 8px;
+          transition: $transition;
+
+          &:hover {
+            color: $text-main;
+            background: rgba(255, 255, 255, 0.05);
+          }
+        }
+      }
     }
-    
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-    
-    .logo-icon {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      color: var(--white);
-      font-size: 20px;
-    }
-    
-    .logo-text {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--dark);
-    }
-    
-    .nav-links {
-      display: flex;
-      gap: 24px;
-    }
-    
-    .nav-links a {
-      color: var(--gray-700);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 16px;
-      padding: 8px 16px;
-      border-radius: 6px;
-      transition: all 0.3s ease;
-    }
-    
-    .nav-links a:hover {
-      color: var(--primary);
-      background-color: rgba(0, 102, 204, 0.05);
-    }
-    
-    .button {
-      display: inline-block;
-      background: var(--accent);
-      color: var(--white);
-      padding: 12px 24px;
-      border-radius: var(--radius);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-      text-align: center;
-    }
-    
-    .button:hover {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-    }
-    
-    .button.outline {
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--accent);
-    }
-    
-    .button.outline:hover {
-      background: var(--accent);
-      color: var(--white);
-    }
-    
-    .button.primary {
-      background: var(--primary);
-    }
-    
-    .button.primary:hover {
-      background: var(--primary-dark);
-    }
-    
-    .hero {
-      padding: 80px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .hero-background {
+  }
+
+  // --- HERO SECTION ---
+  .hero {
+    padding: 180px 0 100px;
+    text-align: center;
+    position: relative;
+
+    &::before {
+      content: "";
       position: absolute;
-      width: 100%;
-      height: 100%;
       top: 0;
-      left: 0;
-      background: linear-gradient(135deg, rgba(0, 102, 204, 0.03), rgba(0, 153, 255, 0.06));
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 600px;
+      background: radial-gradient(circle at top, $primary-glow, transparent 70%);
+      pointer-events: none;
       z-index: -1;
     }
-    
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    
-    .hero h1 {
-      font-size: 48px;
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
       font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
       margin-bottom: 24px;
-      color: var(--dark);
-      line-height: 1.2;
+      background: linear-gradient(to bottom, #fff 40%, rgba(255,255,255,0.5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    
-    .hero p {
-      font-size: 20px;
-      color: var(--gray-700);
-      max-width: 600px;
+
+    p {
+      font-size: 1.25rem;
+      color: $text-muted;
+      max-width: 650px;
       margin: 0 auto 40px;
-      font-weight: 400;
     }
-    
+
     .hero-buttons {
       display: flex;
       gap: 16px;
       justify-content: center;
-      flex-wrap: wrap;
     }
-    
-    .section-title {
-      text-align: center;
-      margin-bottom: 60px;
+  }
+
+  // --- BUTTONS ---
+  .btn {
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: $transition;
+    cursor: pointer;
+
+    &.primary {
+      background: $text-main;
+      color: $bg-base;
+      &:hover { transform: translateY(-2px); filter: brightness(0.9); }
     }
-    
-    .section-title h2 {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 16px;
+
+    &.outline {
+      border: 1px solid $border;
+      color: $text-main;
+      background: rgba(255,255,255,0.03);
+      &:hover { background: rgba(255,255,255,0.08); border-color: $text-muted; }
     }
-    
-    .section-title p {
-      font-size: 18px;
-      color: var(--gray-500);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-      margin-top: 60px;
-    }
-    
-    .feature {
-      background-color: var(--white);
+  }
+
+  // --- BENTO FEATURES ---
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-bottom: 100px;
+
+    .card {
+      background: $bg-card;
+      border: 1px solid $border;
+      border-radius: $radius-lg;
       padding: 32px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: all 0.3s ease;
-      border: 1px solid var(--gray-200);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
+      transition: $transition;
+      position: relative;
+      overflow: hidden;
+
+      &:hover {
+        border-color: rgba($primary, 0.4);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      }
+
+      .icon-box {
+        width: 44px;
+        height: 44px;
+        background: rgba($primary, 0.1);
+        border: 1px solid rgba($primary, 0.2);
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        color: $primary;
+        font-weight: 700;
+        margin-bottom: 24px;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+        font-weight: 600;
+      }
+
+      p {
+        color: $text-muted;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
     }
+
+    // Bento sizes
+    .large { grid-column: span 2; }
+  }
+
+  // --- CTA ---
+  .cta-section {
+    background: linear-gradient(135deg, #1e1e1e, $bg-base);
+    border: 1px solid $border;
+    border-radius: 24px;
+    padding: 80px 40px;
+    text-align: center;
+    margin-bottom: 100px;
+
+    h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
+    p { color: $text-muted; margin-bottom: 32px; }
+  }
+
+  // --- FOOTER ---
+  .footer {
+    border-top: 1px solid $border;
+    padding: 80px 0 40px;
     
-    .feature:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .feature-icon {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, var(--primary-light), var(--primary));
-      border-radius: 12px;
+    .footer-grid {
       display: grid;
-      place-items: center;
-      margin-bottom: 24px;
-      color: var(--white);
-      font-size: 24px;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
     }
-    
-    .feature h3 {
-      font-size: 20px;
-      color: var(--primary);
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-    
-    .feature p {
-      color: var(--gray-700);
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 24px;
-      flex-grow: 1;
-    }
-    
-    .feature-link {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: gap 0.3s ease;
-    }
-    
-    .feature-link:hover {
-      gap: 12px;
-    }
-    
-    .cta {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      padding: 80px 32px;
-      border-radius: var(--radius);
-      margin-top: 100px;
-      color: var(--white);
-      text-align: center;
-    }
-    
-    .cta h2 {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    
-    .cta p {
-      font-size: 18px;
-      max-width: 600px;
-      margin: 0 auto 32px;
-      opacity: 0.9;
-    }
-    
-    .footer {
-      background-color: var(--dark);
-      color: var(--gray-300);
-      padding: 60px 0 40px;
-      margin-top: 100px;
-    }
-    
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    
-    .footer-col h4 {
-      color: var(--white);
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 24px;
-    }
-    
-    .footer-links {
-      list-style: none;
-    }
-    
-    .footer-links li {
-      margin-bottom: 12px;
-    }
-    
-    .footer-links a {
-      color: var(--gray-300);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    
-    .footer-links a:hover {
-      color: var(--white);
-    }
-    
-    .copyright {
-      text-align: center;
-      padding-top: 40px;
-      max-width: var(--max-width);
-      margin: 0 auto;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      margin-top: 40px;
-      color: var(--gray-500);
-      font-size: 14px;
-      padding-left: 24px;
-      padding-right: 24px;
-    }
-    
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 36px;
-      }
-      
-      .hero p {
-        font-size: 18px;
-      }
-      
-      .features {
-        grid-template-columns: 1fr;
-      }
-      
-      .hero-buttons {
-        flex-direction: column;
-        width: 100%;
-      }
-      
-      .hero-buttons .button {
-        width: 100%;
-      }
-      
-      .nav-links {
-        display: none;
-      }
-    }
-  </style>
-  <!-- Sticky Navigation -->
-  <div class="sticky-header" class:isSticky>
-    <div class="nav-container">
-      <nav class="nav">
-        <a href="#" class="logo">
-          <div class="logo-icon">PA</div>
-          <div class="logo-text">Professional Accounting</div>
-        </a>
-        <div class="nav-links">
-          <a href="#home">Home</a>
-          <a href="#services">Services</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </nav>
-    </div>
+
+    h4 { color: $text-main; margin-bottom: 20px; font-weight: 600; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 12px; }
+    a { color: $text-muted; text-decoration: none; transition: 0.2s; &:hover { color: $primary; }}
+  }
+
+  @media (max-width: 900px) {
+    .features-grid { grid-template-columns: 1fr; .large { grid-column: span 1; }}
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<header class="sticky-header" class:isSticky>
+  <div class="nav-container">
+    <nav class="nav">
+      <a href="/" class="logo">
+        <div class="logo-icon">L</div>
+        <span class="logo-text">Lalye OS</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a href="/login" class="btn outline">Sign In</a>
+    </nav>
   </div>
-  
+</header>
+
+<div class="container">
+  <section class="hero">
+    <h1>L'intelligence financière <br/> sans la complexité.</h1>
+    <p>Pilotez votre entreprise avec un OS financier moderne. Automatisez vos taxes, gérez vos flux et débloquez votre croissance.</p>
+    <div class="hero-buttons">
+      <a href="/dash" class="btn primary">Démarrer gratuitement</a>
+      <a href="#features" class="btn outline">Voir la démo</a>
+    </div>
+  </section>
+
+  <section class="features-grid" id="features">
+    <div class="card large">
+      <div class="icon-box">T</div>
+      <h3>Fiscalité Intelligente</h3>
+      <p>Optimisez vos déclarations avec notre moteur de calcul temps réel conforme aux dernières régulations mondiales.</p>
+    </div>
+    <div class="card">
+      <div class="icon-box">I</div>
+      <h3>Facturation</h3>
+      <p>Envoyez des factures professionnelles qui se font payer 3x plus vite.</p>
+    </div>
+    <div class="card">
+      <div class="icon-box">R</div>
+      <h3>Reporting</h3>
+      <p>Visualisez votre santé financière en un coup d'œil.</p>
+    </div>
+    <div class="card large">
+      <div class="icon-box">C</div>
+      <h3>Gestion de Trésorerie</h3>
+      <p>Anticipez vos besoins de cash avec nos outils de prévision basés sur l'historique de vos flux réels.</p>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Prêt à transformer vos finances ?</h2>
+    <p>Rejoignez les 500+ entreprises qui font confiance à Lalye pour leur gestion.</p>
+    <a href="/dash" class="btn primary">Créer mon compte</a>
+  </section>
+</div>
+
+<footer class="footer">
   <div class="container">
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="hero-background" />
-      <div class="hero-content">
-        <h1>Elevate Your Financial Management</h1>
-        <p>
-          Our advanced accounting solutions help businesses optimize financial
-          processes, simplify taxation, and gain valuable insights for strategic
-          decision-making.
-        </p>
-        <div class="hero-buttons">
-          <a href="/dash" class="button primary">Schedule a Consultation</a>
-          <a href="/dash" class="button outline">Explore Services</a>
-        </div>
+    <div class="footer-grid">
+      <div>
+        <span class="logo-text">Lalye OS</span>
+        <p style="color: #6b7280; margin-top: 16px;">La plateforme financière nouvelle génération.</p>
       </div>
-    </section>
-  
-    <!-- Services Section -->
-    <section id="services">
-      <div class="section-title">
-        <h2>Comprehensive Financial Solutions</h2>
-        <p>
-          Tailored accounting services designed to meet the unique needs of your
-          business
-        </p>
+      <div>
+        <h4>Produit</h4>
+        <ul>
+          <li><a href="/">Fonctionnalités</a></li>
+          <li><a href="/">Tarifs</a></li>
+        </ul>
       </div>
-  
-      <div class="features">
-        <div class="feature">
-          <div class="feature-icon">T</div>
-          <h3>Advanced Tax Planning</h3>
-          <p>
-            Strategic tax planning and preparation services to minimize liabilities
-            and ensure compliance with the latest regulations across multiple
-            jurisdictions.
-          </p>
-          <a href="#" class="feature-link">Learn more →</a>
-        </div>
-  
-        <div class="feature">
-          <div class="feature-icon">I</div>
-          <h3>Intelligent Invoicing</h3>
-          <p>
-            Streamline your billing process with automated invoicing, payment
-            tracking, and customizable templates that reflect your brand identity.
-          </p>
-          <a href="#" class="feature-link">Learn more →</a>
-        </div>
-  
-        <div class="feature">
-          <div class="feature-icon">R</div>
-          <h3>Real-time Financial Reporting</h3>
-          <p>
-            Access comprehensive financial reports with intuitive visualizations to
-            monitor performance and make data-driven decisions.
-          </p>
-          <a href="#" class="feature-link">Learn more →</a>
-        </div>
-  
-        <div class="feature">
-          <div class="feature-icon">C</div>
-          <h3>Cash Flow Management</h3>
-          <p>
-            Optimize your cash flow with advanced forecasting tools, receivables
-            management, and strategic planning assistance.
-          </p>
-          <a href="#" class="feature-link">Learn more →</a>
-        </div>
-  
-        <div class="feature">
-          <div class="feature-icon">P</div>
-          <h3>Payroll Solutions</h3>
-          <p>
-            Comprehensive payroll processing with automated tax calculations,
-            direct deposits, and compliance management for businesses of all sizes.
-          </p>
-          <a href="#" class="feature-link">Learn more →</a>
-        </div>
-  
-        <div class="feature">
-          <div class="feature-icon">A</div>
-          <h3>Audit & Assurance</h3>
-          <p>
-            Professional audit services to verify financial integrity, identify
-            risks, and ensure compliance with industry standards and regulations.
-          </p>
-          <a href="#" class="feature-link">Learn more →</a>
-        </div>
+      <div>
+        <h4>Société</h4>
+        <ul>
+          <li><a href="/">À propos</a></li>
+          <li><a href="/">Blog</a></li>
+        </ul>
       </div>
-    </section>
-  
-    <!-- Call to Action -->
-    <section id="contact" class="cta">
-      <h2>Ready to Transform Your Financial Operations?</h2>
-      <p>
-        Our team of certified accountants is ready to help you streamline your
-        finances and focus on growing your business.
-      </p>
-      <a href="#contact" class="button">Get Started Today</a>
-    </section>
+      <div>
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="/">Confidentialité</a></li>
+          <li><a href="/">CGU</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
-  
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-col">
-        <h4>Professional Accounting</h4>
-        <ul class="footer-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#careers">Careers</a></li>
-        </ul>
-      </div>
-  
-      <div class="footer-col">
-        <h4>Services</h4>
-        <ul class="footer-links">
-          <li><a href="#">Tax Planning</a></li>
-          <li><a href="#">Financial Reporting</a></li>
-          <li><a href="#">Payroll Management</a></li>
-          <li><a href="#">Business Advisory</a></li>
-        </ul>
-      </div>
-  
-      <div class="footer-col">
-        <h4>Resources</h4>
-        <ul class="footer-links">
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Tax Resources</a></li>
-          <li><a href="#">Financial Calculators</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
-      </div>
-  
-      <div class="footer-col">
-        <h4>Contact Us</h4>
-        <ul class="footer-links">
-          <li>123 Finance Street</li>
-          <li>New York, NY 10001</li>
-          <li>contact@professionalaccounting.com</li>
-          <li>(555) 123-4567</li>
-        </ul>
-      </div>
-    </div>
-  
-    <div class="copyright">
-      <p>© 2025 Professional Accounting Solutions. All rights reserved.</p>
-    </div>
-  </footer>
-  
+</footer>
